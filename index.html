@@ -1,43 +1,43 @@
 <html>
 
 <head>
-    <script defer src="script.js"></script>
-    <style>
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <script defer src="script.js"></script>
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            display: flex;
-            flex-direction: column;
-        }
+    body {
+      display: flex;
+      flex-direction: column;
+    }
 
-        .pipe-container {
-            flex: 1 0 auto;
-        }
+    .pipe-container {
+      flex: 1 0 auto;
+    }
 
-        .footer {
-            flex-shrink: 0;
-        }
-    </style>
+    .footer {
+      flex-shrink: 0;
+    }
+  </style>
 </head>
 
 <body>
 
-    <div class="pipe-container"></div>
-    <div class="footer">
-        <label for="speed">Speed</label>
-        <input type="number" id="speed" name="speed" value="20" />
+  <div class="pipe-container"></div>
+  <div class="footer">
+    <label for="speed">Speed</label>
+    <input type="number" id="speed" name="speed" value="20" />
 
-        <label for="count">Count</label>
-        <input type="number" id="count" name="count" value="30" />
+    <label for="count">Count</label>
+    <input type="number" id="count" name="count" value="30" />
 
-        <input type="submit" id="start-sorting" value="Start" onclick="startSorting()" />
-    </div>
+    <input type="submit" id="start-sorting" value="Start" onclick="startSorting()" />
+  </div>
 </body>
 
 </html>
