@@ -1,7 +1,3 @@
-
-const TOTAL_COUNT = 200;
-const SORT_SPEED = 20;
-
 const pipeContainer = document.getElementsByClassName("pipe-container")[0];
 
 startSorting();
@@ -13,12 +9,14 @@ async function startSorting() {
 
     await new Promise((resolve) => setTimeout(() => resolve(true), 2000));
 
-    let sortList = new Array(TOTAL_COUNT);
-    for (let i = 0; i <= TOTAL_COUNT; i++) {
+    const count = document.getElementById("count").value;
+
+    let sortList = new Array(count);
+    for (let i = 0; i <= count; i++) {
         sortList[i] = Math.random();
     }
 
-    for (let i = 0; i <= TOTAL_COUNT; i++) {
+    for (let i = 0; i <= count; i++) {
         addPipe(pipeContainer, i, sortList[i]);
     }
 
@@ -27,8 +25,7 @@ async function startSorting() {
 }
 
 async function visualize(sortList, speed) {
-    console.log(speed)
-    const sortedList = bubbleSort(sortList);
+    const sortedList = mergeSort(sortList);
     let compareList = [...sortList];
     let done = false;
 
@@ -82,32 +79,28 @@ function* bubbleSort(unsortedList) {
     }
 }
 
-
-function mergeSort(unsortedList) {
+function* mergeSort(unsortedList) {
     let list = [...unsortedList.map(i => [i])];
+
     while (list.length > 1) {
         let tempList = [];
         for (let i = 0; i <= list.length - 2; i += 2) {
-            let innerTempList = [];
-            for (let j = 0; j <= list[i].length - 1; j++) {
-                if (list[i][j] < list[i + 1][j]) {
-                    innerTempList = [...innerTempList, list[i][j], list[i + 1][j]];
-                } else {
-                    innerTempList = [...innerTempList, list[i + 1][j], list[i][j]];
-                }
+            if (list[i][0] < list[i + 1][0]) {
+                tempList = [...tempList, [...list[i], ...list[i + 1]]];
+            } else {
+                tempList = [...tempList, [...list[i + 1], ...list[i]]];
             }
-
-            tempList = [...tempList, innerTempList];
         }
+
         if (list.length % 2 !== 0) {
-            console.log(list[list.length - 1])
             tempList = [...tempList, list[list.length - 1]];
         }
-        console.log(list.length)
-        console.log(list[list.length - 1])
-        list = [...tempList];
+
+        list = tempList;
+        yield list;
     }
-    return list;
+
+    yield list;
 }
 
 function addPipe(element, id, height) {
