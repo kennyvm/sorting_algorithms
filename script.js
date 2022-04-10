@@ -13,11 +13,11 @@ async function startSorting() {
 
   let sortList = new Array(count);
   for (let i = 0; i <= count; i++) {
-    sortList[i] = Math.random();
+    sortList[i] = { nr: Math.random(), index: i };
   }
 
   for (let i = 0; i <= count; i++) {
-    addPipe(pipeContainer, i, sortList[i]);
+    addPipe(pipeContainer, i, sortList[i].nr);
   }
 
   const speed = document.getElementById("speed").value;
@@ -25,7 +25,7 @@ async function startSorting() {
 }
 
 async function visualize(sortList, speed) {
-  const sortedList = mergeSort(sortList);
+  const sortedList = bubbleSort(sortList);
   let compareList = [...sortList];
   let done = false;
 
@@ -38,7 +38,7 @@ async function visualize(sortList, speed) {
     let pos2 = -1;
 
     for (let i = 0; i <= next.value.length - 1; i++) {
-      if (next.value[i] !== compareList[i]) {
+      if (next.value[i].nr !== compareList[i].nr) {
         if (pos1 < 0) pos1 = i;
         else pos2 = i;
       }
@@ -52,8 +52,8 @@ async function visualize(sortList, speed) {
       pipe2.style.backgroundColor = "#00FFFF";
       await new Promise((resolve) => setTimeout(resolve, speed));
 
-      pipe1.style.height = `${Math.round(600 * next.value[pos1])}px`;
-      pipe2.style.height = `${Math.round(600 * next.value[pos2])}px`;
+      pipe1.style.height = `${Math.round(600 * next.value[pos1].nr)}px`;
+      pipe2.style.height = `${Math.round(600 * next.value[pos2].nr)}px`;
       await new Promise((resolve) => setTimeout(resolve, speed));
 
       pipe1.style.backgroundColor = "#666";
@@ -68,7 +68,7 @@ function* bubbleSort(unsortedList) {
   let list = [...unsortedList];
   for (let i = 0; i <= list.length - 1; i++) {
     for (let j = 0; j <= list.length - 2 - i; j++) {
-      if (list[j] > list[j + 1]) {
+      if (list[j].nr > list[j + 1].nr) {
         const temp = list[j];
         list[j] = list[j + 1];
         list[j + 1] = temp;
